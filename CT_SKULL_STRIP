@@ -1,2 +1,17 @@
+# Thresholding image from 5 to 100
+fslmaths <raw_image> -thr 5 -uthr 100 outfile
 
+#Smoothing image
+fslmaths <outfile> -s 1 outfile
 
+# Rethreshold image
+fslmaths <outfile> -thr 5 -uthr 100 outfile
+
+#brain extraction
+bet <outfile> outfile_bet -f 0.35 -R -m
+
+#View extraction
+fslview <outfile> <outfile_bet_mask>
+
+#calcualte volume
+fslmstats <outfile_bet_mask> -V
